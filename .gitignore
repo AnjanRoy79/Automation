@@ -1,0 +1,46 @@
+# ==========================
+# Eclipse & IntelliJ files
+# ==========================
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+
+# ==========================
+# Build directories
+# ==========================
+bin/
+out/
+target/
+
+# ==========================
+# Reports & Logs
+# ==========================
+test-output/
+reports/
+extent-reports/
+logs/
+*.log
+
+# ==========================
+# OS-specific files
+# ==========================
+.DS_Store
+Thumbs.db
+
+# ==========================
+# Temporary files
+# ==========================
+*.tmp
+*.swp
+*.bak
+
+# ==========================
+# Libraries (keep Maven/Gradle clean)
+# ==========================
+/Lib/
+
+# If you’re using Maven or Gradle,
+# dependency jars are managed automatically
+# so no need to push `Lib/` manually
