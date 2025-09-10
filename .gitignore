@@ -41,6 +41,8 @@ Thumbs.db
 # ==========================
 /Lib/
 
-# If you’re using Maven or Gradle,
-# dependency jars are managed automatically
-# so no need to push `Lib/` manually
+# ==========================
+# Excel Test Data
+# ==========================
+# ❌ Do NOT ignore ExcelFiles/ (keep in repo)
+# so your framework has test data
