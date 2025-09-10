@@ -1,0 +1,44 @@
+package utils;
+
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class ScreenshotUtils {
+
+    public static String captureScreenshot(WebDriver driver, String testName) {
+        try {
+            // ✅ Take screenshot
+            File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+            // ✅ Create screenshots folder under reports
+            String screenshotDir = System.getProperty("user.dir") + File.separator + "reports" + File.separator + "screenshots";
+            File folder = new File(screenshotDir);
+            if (!folder.exists() && folder.mkdirs()) {
+                System.out.println("📂 Created screenshots directory at: " + screenshotDir);
+            }
+
+            // ✅ Add timestamp to avoid overwriting
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+            // ✅ Build final screenshot path
+            String finalPath = screenshotDir + File.separator + testName + "_" + timestamp + ".png";
+            File destFile = new File(finalPath);
+
+            // ✅ Copy file
+            Files.copy(srcFile.toPath(), destFile.toPath());
+
+            return finalPath;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}

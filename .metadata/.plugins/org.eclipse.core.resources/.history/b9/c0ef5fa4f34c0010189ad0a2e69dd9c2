@@ -1,0 +1,9 @@
+package com.Mytests;
+
+import org.testng.annotations.Test;
+
+public class TestNGClassInMaven {
+  @Test
+  public void f() {
+  }
+}

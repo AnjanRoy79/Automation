@@ -1,0 +1,89 @@
+package com.Mytests;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+public class OHRMClass {
+    WebDriver driver;
+    WebDriverWait wait;
+    JavascriptExecutor js;
+
+    public OHRMClass(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        this.js = (JavascriptExecutor) driver;
+    }
+
+    // Login
+    public void login(String un, String ps) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username"))).sendKeys(un);
+        driver.findElement(By.name("password")).sendKeys(ps);
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
+    }
+
+    // Open PIM
+    public void openPIM() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("PIM"))).click();
+    }
+
+    // Add Employee
+    public void addEmployee(String fName, String mName, String lName, String un, String ps) {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Add']"))).click();
+
+        // Fill name fields
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("firstName"))).sendKeys(fName);
+        driver.findElement(By.name("middleName")).sendKeys(mName);
+        driver.findElement(By.name("lastName")).sendKeys(lName);
+
+        // Enable login details toggle
+        driver.findElement(By.xpath("//label/span[contains(text(),'Create Login Details')]")).click();
+
+        // Fill login details
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@autocomplete='off' and @type='text']"))).sendKeys(un); // Username
+        driver.findElement(By.xpath("//input[@type='password']")).sendKeys(ps); // Password
+        driver.findElement(By.xpath("(//input[@type='password'])[2]")).sendKeys(ps); // Confirm Password
+
+        // Click Save
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+        // Wait for Personal Details page to load
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("employeeId")));
+    }
+
+    // Logout (Admin or Employee)
+    public void logOut() throws InterruptedException {
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("i.oxd-icon.bi-caret-down-fill"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Log"))).click();
+    }
+
+    // Get Employee ID
+    public String getEmpId() {
+        WebElement empIdInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("employeeId")));
+        return empIdInput.getAttribute("value");
+    }
+
+    // Get Logged-In Employee Name
+    public String getEmpName() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("p.oxd-userdropdown-name"))).getText();
+    }
+
+    // Delete Employee by username
+    public void deleteEmployee(String un) throws InterruptedException {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Admin']"))).click();
+
+        // Search for user
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[contains(text(),'Username')]/../following-sibling::div//input"))).sendKeys(un);
+        driver.findElement(By.xpath("//button[normalize-space()='Search']")).click();
+
+        // Scroll and select checkbox
+        js.executeScript("window.scrollBy(0, 300)", "");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@role='row']//div[@role='cell']//label/span"))).click();
+
+        // Click delete and confirm
+        driver.findElement(By.xpath("//button[normalize-space()='Delete Selected']")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Yes, Delete']"))).click();
+    }
+}

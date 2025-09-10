@@ -1,0 +1,81 @@
+package com.orangeHRM.pages;
+
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.*;
+
+import java.time.Duration;
+
+import utils.BaseTest;
+
+public class OrangeHRMTest extends BaseTest {
+    WebDriver driver;
+
+    @BeforeMethod
+    public void setup() {
+        driver = getDriver(); // from BaseTest
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+    }
+
+    @Test(dataProvider = "employeeData")
+    public void AllData(String adminUser, String adminPass,
+                                          String firstName, String middleName, String lastName,
+                                          String newUsername, String newPassword) throws InterruptedException {
+
+        // Login as Admin
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(adminUser, adminPass);
+
+        // Add Employee
+        DashboardPage dashboard = new DashboardPage(driver);
+        UserManagementPage userMgmt = new UserManagementPage(driver);
+        AddEmployeePage addEmp = new AddEmployeePage(driver);
+
+        userMgmt.goToPIMTab();
+        Thread.sleep(1000);
+        userMgmt.clickAddButton();
+        addEmp.addEmployee(firstName, middleName, lastName, newUsername, newPassword);
+        Thread.sleep(3000);
+
+        // Logout
+        dashboard.logout();
+
+        // Login with new employee
+        loginPage.login(newUsername, newPassword);
+        Thread.sleep(3000);
+        String loggedUser = dashboard.getLoggedInUsername();
+        System.out.println("Logged in as: " + loggedUser);
+
+        // Get Employee ID
+        dashboard.clickMyInfo();
+        Thread.sleep(3000);
+        String empId = dashboard.getEmployeeId();
+        System.out.println("Employee ID: " + empId);
+
+        // Logout again
+        dashboard.logout();
+
+        // Admin login → Delete employee
+        loginPage.login(adminUser, adminPass);
+        userMgmt.goToAdminTab();
+        userMgmt.searchUser(newUsername);
+        userMgmt.deleteSearch();
+        System.out.println("Deleted employee: " + newUsername);
+
+        // Final logout
+        dashboard.logout();
+    }
+
+    @DataProvider(name = "employeeData")
+    public Object[][] provideEmployeeData() {
+        return new Object[][] {
+            {"Admin", "admin123", "Anjan", "Kumar", "Roy", "AnjanTest123", "Zxcv@786b"},
+        };
+    }
+
+    @AfterMethod
+    public void close() {
+        driver.quit();
+    }
+}

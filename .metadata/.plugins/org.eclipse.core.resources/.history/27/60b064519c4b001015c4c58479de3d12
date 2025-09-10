@@ -1,0 +1,14 @@
+package com.Mytests;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class LaunchingSelenium {
+
+	public static void main(String[] args) {
+		WebDriver driver = new ChromeDriver();
+		driver.get("https//www.123greetings.com");
+
+	}
+
+}	

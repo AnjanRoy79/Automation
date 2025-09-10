@@ -1,0 +1,344 @@
+[
+  {
+    "line": 2,
+    "elements": [
+      {
+        "line": 4,
+        "name": "",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 3698803700,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Launch Amazon site",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.click_on_sell_link()"
+            },
+            "keyword": "Given "
+          }
+        ]
+      },
+      {
+        "start_timestamp": "2025-06-24T09:23:58.280Z",
+        "before": [
+          {
+            "result": {
+              "duration": 19017429900,
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.beforeScenario()"
+            }
+          }
+        ],
+        "line": 7,
+        "name": "Test Sell link",
+        "description": "",
+        "id": "amazon-links;test-sell-link",
+        "after": [
+          {
+            "result": {
+              "duration": 997200,
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.closeBrowser()"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 766917400,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "Click on Sell link",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.click_on_sell_link()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 22938200,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "Sell page should display",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.sell_page_should_display()"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@SellLink"
+          }
+        ]
+      },
+      {
+        "line": 4,
+        "name": "",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 6164606400,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Launch Amazon site",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.click_on_sell_link()"
+            },
+            "keyword": "Given "
+          }
+        ]
+      },
+      {
+        "start_timestamp": "2025-06-24T09:24:21.953Z",
+        "before": [
+          {
+            "result": {
+              "duration": 23216269300,
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.beforeScenario()"
+            }
+          }
+        ],
+        "line": 11,
+        "name": "Test Bestsellers link",
+        "description": "",
+        "id": "amazon-links;test-bestsellers-link",
+        "after": [
+          {
+            "result": {
+              "duration": 997500,
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.closeBrowser()"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 3083799300,
+              "status": "passed"
+            },
+            "line": 12,
+            "name": "Click on BestSellers link",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.click_on_best_sellers_link()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 2411587500,
+              "status": "passed"
+            },
+            "line": 13,
+            "name": "Bestsellers page should display",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.bestsellers_page_should_display()"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@BestSell"
+          }
+        ]
+      },
+      {
+        "line": 4,
+        "name": "",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 16314617900,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Launch Amazon site",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.click_on_sell_link()"
+            },
+            "keyword": "Given "
+          }
+        ]
+      },
+      {
+        "start_timestamp": "2025-06-24T09:24:56.861Z",
+        "before": [
+          {
+            "result": {
+              "duration": 33189778700,
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.beforeScenario()"
+            }
+          }
+        ],
+        "line": 15,
+        "name": "Test Mobiles link",
+        "description": "",
+        "id": "amazon-links;test-mobiles-link",
+        "after": [
+          {
+            "result": {
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.closeBrowser()"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 22368522100,
+              "status": "passed"
+            },
+            "line": 16,
+            "name": "Click on Mobiles link",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.click_on_mobiles_link()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 19946500,
+              "status": "passed"
+            },
+            "line": 17,
+            "name": "Mobiles page should display",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.mobiles_page_should_display()"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@Mobile"
+          }
+        ]
+      },
+      {
+        "line": 4,
+        "name": "",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 13444251300,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Launch Amazon site",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.click_on_sell_link()"
+            },
+            "keyword": "Given "
+          }
+        ]
+      },
+      {
+        "start_timestamp": "2025-06-24T09:26:08.809Z",
+        "before": [
+          {
+            "result": {
+              "duration": 27300835400,
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.beforeScenario()"
+            }
+          }
+        ],
+        "line": 19,
+        "name": "Test Todays deal link",
+        "description": "",
+        "id": "amazon-links;test-todays-deal-link",
+        "after": [
+          {
+            "result": {
+              "duration": 998000,
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.closeBrowser()"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 4708479800,
+              "status": "passed"
+            },
+            "line": 20,
+            "name": "Click on Todays deal link",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.click_on_todays_deal_link()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 113697200,
+              "status": "passed"
+            },
+            "line": 21,
+            "name": "Todays deal page should display",
+            "match": {
+              "location": "com.StepDef.S05AmazonLinks.todays_deal_page_should_display()"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@Deal"
+          }
+        ]
+      }
+    ],
+    "name": "Amazon Links",
+    "description": "",
+    "id": "amazon-links",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/F05AmazonLinks.feature",
+    "tags": []
+  }
+]

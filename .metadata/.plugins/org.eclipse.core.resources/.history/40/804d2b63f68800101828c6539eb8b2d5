@@ -1,0 +1,95 @@
+package com.Capstone.OHRM;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.*;
+import java.time.Duration;
+
+public class OrangeHRMTest {
+	
+    WebDriver driver;
+    LoginPage loginPage;
+    DashboardPage dashboard;
+    UserManagementPage userMgmt;
+    AddEmployeePage addEmp;
+
+    // Test data
+    String adminUser = "Admin";
+    String adminPass = "admin123";
+    String firstName = "Anjan";
+    String middleName = "Kumar";
+    String lastName = "Roy";
+    String newUsername = "AnjanTest123";
+    String newPassword = "Zxcv@786b";
+
+    @BeforeMethod
+    public void setup() {
+        // Initialize ChromeDriver and open application
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+
+        // Initialize page objects
+        loginPage = new LoginPage(driver);
+        dashboard = new DashboardPage(driver);
+        userMgmt = new UserManagementPage(driver);
+        addEmp = new AddEmployeePage(driver);
+    }
+
+    @Test
+    public void loginAsAdmin() throws InterruptedException {
+        // Step 1: Login as Admin
+        loginPage.login(adminUser, adminPass);
+    }
+
+    @Test(dependsOnMethods = "loginAsAdmin")
+    public void addNewEmployee() throws InterruptedException {
+        // Step 2: Navigate to PIM → Add Employee → Save new employee
+        userMgmt.goToPIMTab();
+        Thread.sleep(1000);
+        userMgmt.clickAddButton();
+        addEmp.addEmployee(firstName, middleName, lastName, newUsername, newPassword);
+        Thread.sleep(3000);
+        dashboard.logout();
+    }
+
+    @Test(dependsOnMethods = "addNewEmployee")
+    public void loginWithNewEmployee() throws InterruptedException {
+        // Step 3: Login with newly created employee credentials
+        loginPage.login(newUsername, newPassword);
+        Thread.sleep(3000);
+        String loggedUser = dashboard.getLoggedInUsername();
+        System.out.println("Logged in as: " + loggedUser);
+
+        // Step 4: Navigate to My Info page → Capture Employee ID
+        dashboard.clickMyInfo();
+        Thread.sleep(3000);
+        String empId = dashboard.getEmployeeId();
+        System.out.println("Employee ID: " + empId);
+
+        // Step 5: Logout as employee
+        dashboard.logout();
+    }
+
+    @Test(dependsOnMethods = "loginWithNewEmployee")
+    public void deleteEmployee() throws InterruptedException {
+        // Step 6: Login again as Admin
+        loginPage.login(adminUser, adminPass);
+
+        // Step 7: Go to Admin tab → Search employee → Delete employee
+        userMgmt.goToAdminTab();
+        userMgmt.searchUser(newUsername);
+        userMgmt.deleteSearch();
+        System.out.println("Deleted employee: " + newUsername);
+
+        // Step 8: Final logout
+        dashboard.logout();
+    }
+
+    @AfterMethod
+    public void close() {
+        // Close the browser
+        driver.close();
+    }
+}

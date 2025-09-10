@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name = "My Suite" parallel = "methods" thread-count="4">
+	<test name = "My Test">
+		<classes>
+			<class name = "com.TestNGDemo.BeforeAndAfterTestMethod">
+			</class>
+		</classes>
+	</test>
+</suite>

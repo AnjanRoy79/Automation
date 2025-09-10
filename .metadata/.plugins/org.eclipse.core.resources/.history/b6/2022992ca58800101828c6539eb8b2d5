@@ -1,0 +1,97 @@
+package utils;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.*;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class BaseTest {
+
+    protected static WebDriver driver;
+    protected static ExtentReports extent;
+    private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+
+    @BeforeSuite(alwaysRun = true)
+    public void setupReport() {
+        try {
+          // Create time stamp for unique report names
+        	
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+            //  Create reports folder if not exists
+            
+            String reportDir = System.getProperty("user.dir") + File.separator + "reports";
+            File folder = new File(reportDir);
+            if (!folder.exists() && folder.mkdirs()) {
+                System.out.println("📂 Created reports directory at: " + reportDir);
+            }
+
+            // Define the HTML report path 
+            
+            String reportPath = reportDir + File.separator + "OrangeHRMReport_" + timestamp + ".html";
+
+            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath);
+            spark.config().setReportName("OrangeHRM Automation Report");
+            spark.config().setDocumentTitle("Test Execution Report");
+            spark.config().setTheme(Theme.STANDARD);
+
+            extent = new ExtentReports();
+            extent.attachReporter(spark);
+
+            // Add system info
+            extent.setSystemInfo("Tester", "Anjan Roy");
+            extent.setSystemInfo("Browser", "Chrome");
+            extent.setSystemInfo("OS", System.getProperty("os.name"));
+
+            System.out.println(" Extent Report initialized at: " + reportPath);
+
+        } catch (Exception e) {
+            System.err.println(" Failed to initialize Extent Report: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public WebDriver getDriver() {
+        if (driver == null) {
+            driver = new ChromeDriver();
+        }
+        return driver;
+    }
+
+    public static ExtentTest getTest() {
+        return test.get();
+    }
+
+    public static void setTest(ExtentTest extentTest) {
+        test.set(extentTest);
+    }
+
+    @AfterSuite(alwaysRun = true)
+    public void tearDownReport() {
+        try {
+            if (extent != null) {
+                extent.flush();
+                System.out.println("📊 Extent Report flushed successfully!");
+            }
+        } catch (Exception e) {
+            System.err.println("⚠️ Error flushing Extent Report: " + e.getMessage());
+        }
+
+        try {
+            if (driver != null) {
+                driver.quit();
+                driver = null;
+                System.out.println("🛑 WebDriver closed!");
+            }
+        } catch (Exception e) {
+            System.err.println("⚠️ Error quitting WebDriver: " + e.getMessage());
+        }
+    }
+}

@@ -1,0 +1,112 @@
+package com.OrangeHRM;
+
+import java.io.File;
+import java.io.IOException;
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.io.FileHandler;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+public class LoginTest {
+    WebDriver driver;
+    ExtentReports extent;
+    ExtentTest test;
+
+    @BeforeTest
+    public void setupReport() {
+        ExtentSparkReporter reporter = new ExtentSparkReporter("ExtentReport.html");
+        extent = new ExtentReports();
+        extent.attachReporter(reporter);
+    }
+
+    @BeforeMethod
+    public void setup() {
+    	EdgeOptions options = new EdgeOptions();
+    	driver = new EdgeDriver(options);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+       
+        
+        WebDriver driver = new EdgeDriver(options);
+        options.addArguments("--disable-notifications");
+        options.addArguments("--disable-save-password-bubble");
+        options.addArguments("--disable-infobars");
+        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+        options.setExperimentalOption("useAutomationExtension", false);
+        
+        
+    }
+
+    @DataProvider(name = "loginData")
+    public Object[][] getData() throws IOException {
+        return ExcelUtil.getLoginData("D:\\Testing\\Selenium\\LoginDataSet.xlsx", "LoginData");
+    }
+
+    @Test(dataProvider = "loginData")
+    public void testLogin(String username, String password) throws IOException, InterruptedException {
+        test = extent.createTest("Login Test: " + username + " / " + password);
+
+        OrangeHRMPage orangeHRM = new OrangeHRMPage(driver);
+        orangeHRM.login(username, password);
+        captureScreenshot(username);
+
+        try {
+            boolean isLoggedIn = driver.findElements(By.xpath("//p[text()='Dashboard']")).size() > 0;
+            if (username.equals("Admin") && password.equals("admin123")) {
+                assert isLoggedIn;
+                test.pass("Valid credentials - Login successful");
+
+                // Navigate to Users section
+                orangeHRM.goToUsers();
+                test.info("Navigated to Admin > User Management > Users");
+
+                // Logout
+                orangeHRM.logout();
+                test.info("Logged out successfully");
+
+            } else {
+                assert !isLoggedIn;
+                test.pass("Invalid credentials - Login failed as expected");
+            }
+        } catch (AssertionError e) {
+            test.fail("Test failed with error: " + e.getMessage());
+        }
+    }
+
+    public void captureScreenshot(String username) throws IOException {
+        //TakesScreenshot ts = (TakesScreenshot) driver;
+       // File src = ts.getScreenshotAs(OutputType.FILE);
+       // File dest = new File("screenshots/" + username + "_" + System.currentTimeMillis() + ".png");
+       // dest.getParentFile().mkdirs();
+      //  org.openqa.selenium.io.FileHandler.copy(src, dest);
+    	
+		File ss = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileHandler.copy(ss, new File("screenshots/" + username + "_" + System.currentTimeMillis() + ".png"));
+    }
+
+    @AfterMethod
+    public void CloseBrowser() {
+        driver.close();
+    }
+
+    @AfterTest
+    public void flushReport() {
+        extent.flush();
+    }
+}

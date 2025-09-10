@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="4" time="176.467">
+    <testcase classname="Amazon Links" name="Test Sell link" time="23.604">
+        <system-out><![CDATA[Given Launch Amazon site....................................................passed
+When Click on Sell link.....................................................passed
+Then Sell page should display...............................................passed
+]]></system-out>
+    </testcase>
+    <testcase classname="Amazon Links" name="Test Bestsellers link" time="34.881">
+        <system-out><![CDATA[Given Launch Amazon site....................................................passed
+When Click on BestSellers link..............................................passed
+Then Bestsellers page should display........................................passed
+]]></system-out>
+    </testcase>
+    <testcase classname="Amazon Links" name="Test Mobiles link" time="71.895">
+        <system-out><![CDATA[Given Launch Amazon site....................................................passed
+When Click on Mobiles link..................................................passed
+Then Mobiles page should display............................................passed
+]]></system-out>
+    </testcase>
+    <testcase classname="Amazon Links" name="Test Todays deal link" time="45.572">
+        <system-out><![CDATA[Given Launch Amazon site....................................................passed
+When Click on Todays deal link..............................................passed
+Then Todays deal page should display........................................passed
+]]></system-out>
+    </testcase>
+</testsuite>

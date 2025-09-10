@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name = "LensKart">
+	<test name = "Run1Test">
+		<classes>
+			<class name = "com.TestNGDemo.D05LenskartTest">
+				<methods>
+					<exclude name = "SCREENGLASSES"> </exclude>
+					<exclude name = "SUNGLASSES"> </exclude>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

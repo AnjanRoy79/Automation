@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;CucumberProject/src/test/resources/RegistrationWithTable.feature&apos; to &apos;F06RegistrationWithTable.feature&apos;" description="Rename resource &apos;RegistrationWithTable.feature&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/test/resources/RegistrationWithTable.feature" name="F06RegistrationWithTable.feature" stamp="1750747086513" updateReferences="true"/>
+</session>

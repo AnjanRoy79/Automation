@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name = "LensKart">
+	<test name = "Run1Test">
+		<classes>
+			<class name = "com.TestNGDemo.D05LenskartTest">
+				<methods>
+					<include name = "SCREENGLASSES"> </include>
+					<include name = "SUNGLASSES"> </include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

@@ -1,0 +1,117 @@
+package com.OrangeHRM;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+
+public class OrangeHRMPage {
+    WebDriver driver;
+    WebDriverWait wait;
+
+    // Login using data from excel and click submit
+    
+    @FindBy(name = "username") WebElement usernameField;
+    @FindBy(name = "password") WebElement passwordField;
+    @FindBy(xpath = "//button[@type='submit']") WebElement loginButton;
+    
+      
+    // Successful login and then clicking on links as required in SRC and logout.
+    
+    @FindBy(xpath = "//a[@href='/web/index.php/admin/viewAdminModule']") WebElement adminMenu;
+    @FindBy(xpath = "//span[text()='User Management']/ancestor::li") WebElement userManagement;
+    @FindBy(xpath = "//a[contains(@href,'viewSystemUsers')]")WebElement usersLink;
+    @FindBy(xpath = "//span[@class='oxd-userdropdown-tab']")WebElement profileDropdown;
+    @FindBy(xpath = "//a[text()='Logout']")WebElement logoutButton;
+ 
+
+    public OrangeHRMPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    public void login(String uname, String pwd) throws InterruptedException {
+        
+        usernameField.sendKeys(uname);
+        passwordField.sendKeys(pwd);
+        loginButton.click();
+        Thread.sleep(1000);
+    }
+ 
+    public void goToUsers() {
+        // Step 1: Wait for Dashboard page to be fully loaded
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h6[text()='Dashboard']")));
+
+        // Step 2: Wait for the Admin <a> link in the sidebar (absolute XPath)
+        WebElement adminMenu = wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("/html/body/div/div[1]/div[1]/aside/nav/div[2]/ul/li[1]/a")
+        ));
+        System.out.println("✅ Successfully landed on Users page.");
+        System.out.println("Tag: " + adminMenu.getTagName());
+        System.out.println("Displayed: " + adminMenu.isDisplayed());
+        System.out.println("Enabled: " + adminMenu.isEnabled());
+        System.out.println("Location: " + adminMenu.getLocation());
+        System.out.println("Size: " + adminMenu.getSize());
+
+        // Step 3: Pause briefly for animation/transition
+        sleep(1500); // This is critical to avoid click failure
+
+        // Step 4: Use JS to scroll into view and click
+        Point point = adminMenu.getLocation();
+        int xOffset = point.getX() + 5;
+        int yOffset = point.getY() + 5;
+
+        System.out.println("Clicking Admin at offset: (" + xOffset + ", " + yOffset + ")");
+
+        // Move mouse to coordinates and click
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(xOffset, yOffset).click().perform();
+
+        // Move back to avoid stuck offset for future elements
+        actions.moveByOffset(-xOffset, -yOffset).perform();
+
+        System.out.println("✅ Clicked Admin using moveByOffset.");
+
+        // Step 5: Wait for User Management and Users menu
+        WebElement userManagement = wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("//span[text()='User Management']/ancestor::li")
+        ));
+        sleep(1000);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", userManagement);
+
+        WebElement usersLink = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//a[contains(@href,'viewSystemUsers')]")
+        ));
+        js.executeScript("arguments[0].click();", usersLink);
+
+        // Step 6: Confirm we landed on Users page
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h5[text()='System Users']")));
+   
+    }
+
+    private void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void logout() {
+        profileDropdown.click();
+        logoutButton.click();
+    }
+}

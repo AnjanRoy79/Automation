@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [TricenticsSilver]">
+  <test thread-count="5" name="ReadParameters(failed)">
+    <parameter name="Ep" value="1000"/>
+    <classes>
+      <class name="com.TestNGDemo.TricenticsSilver">
+        <methods>
+          <include name="beforeTest"/>
+          <include name="EnterVehicleData"/>
+          <include name="afterTest"/>
+        </methods>
+      </class> <!-- com.TestNGDemo.TricenticsSilver -->
+    </classes>
+  </test> <!-- ReadParameters(failed) -->
+</suite> <!-- Failed suite [TricenticsSilver] -->

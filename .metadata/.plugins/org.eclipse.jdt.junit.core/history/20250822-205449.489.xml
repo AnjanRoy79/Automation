@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="R01GoogleTitle" project="CucumberProject" tests="1" started="1" failures="1" errors="0" ignored="0">
+  <testsuite name="com.RunnerClasses.R01GoogleTitle" time="32.737">
+    <testsuite name="Google Search functionality" time="32.737">
+      <testcase name="To validate Google search functionality" classname="Google Search functionality" time="32.737">
+        <failure>java.lang.AssertionError&#13;
+	at org.junit.Assert.fail(Assert.java:87)&#13;
+	at org.junit.Assert.assertTrue(Assert.java:42)&#13;
+	at org.junit.Assert.assertTrue(Assert.java:53)&#13;
+	at com.StepDef.S02GoogleSearch.a_valid_search_result_should_display(S02GoogleSearch.java:37)&#13;
+	at ✽.A valid search result should display(file:///D:/Anjan-SeleniumDemos/CucumberProject/src/test/resources/F02GoogleSearch.feature:7)&#13;
+&#13;
+</failure>
+      </testcase>
+    </testsuite>
+  </testsuite>
+</testrun>

@@ -1,0 +1,87 @@
+package com.Capstone.OHRM;
+
+
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.*;
+
+
+import java.time.Duration;
+@Listeners(Utilis1.ExtentITestNGListeners.class)
+
+public class OrangeHRMTest {
+	
+    WebDriver driver;
+
+    @BeforeMethod
+    public void setup() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+    }
+
+    @Test(dataProvider = "employeeData")
+    public void AllData(String adminUser, String adminPass,
+                                          String firstName, String middleName, String lastName,
+                                          String newUsername, String newPassword) throws InterruptedException {
+
+        // First step is to login with admin username and password
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(adminUser, adminPass);
+
+        // Second step is to navigate to PIM page and click on add button and add new employee
+        DashboardPage dashboard = new DashboardPage(driver);
+        UserManagementPage userMgmt = new UserManagementPage(driver);
+        AddEmployeePage addEmp = new AddEmployeePage(driver);
+        userMgmt.goToPIMTab();
+        Thread.sleep(1000);
+        userMgmt.clickAddButton();
+        addEmp.addEmployee(firstName, middleName, lastName, newUsername, newPassword);
+        Thread.sleep(3000); // to wait for the response as it take time to save the details.
+
+        //  Logout after successful entry. 
+        dashboard.logout();
+
+        // Login with new user name and password that was created
+        loginPage.login(newUsername, newPassword);
+        Thread.sleep(3000);
+        String loggedUser = dashboard.getLoggedInUsername();
+        System.out.println("Logged in as: " + loggedUser);
+
+        // Click on my info page and print employee ID
+        dashboard.clickMyInfo();
+        Thread.sleep(3000);
+        String empId = dashboard.getEmployeeId();
+        System.out.println("Employee ID: " + empId);
+
+        // Logout again
+        dashboard.logout();
+
+        // Admin login again to delete the new user created
+        loginPage.login(adminUser, adminPass);
+        userMgmt.goToAdminTab();
+        userMgmt.searchUser(newUsername);
+        userMgmt.deleteSearch();
+        System.out.println("Deleted employee: " + newUsername);
+
+        //Final logout and close the browser
+        dashboard.logout();
+    }
+    	// actual data.. More can be added
+    @DataProvider(name = "employeeData")
+    public Object[][] provideEmployeeData() {
+        return new Object[][] {
+            {"Admin", "admin123", "Anjan", "Kumar", "Roy", "AnjanTest123", "Zxcv@786b"},
+        };
+    }
+
+    @AfterMethod
+    public void close() {
+    driver.close();
+  
+
+    }
+}
+

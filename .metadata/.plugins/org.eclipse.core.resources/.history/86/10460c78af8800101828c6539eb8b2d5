@@ -1,0 +1,9 @@
+package com.Capstone.OHRM;
+
+import org.testng.annotations.Test;
+
+public class AddEmployeePage {
+  @Test
+  public void f() {
+  }
+}

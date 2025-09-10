@@ -1,0 +1,9 @@
+package utils1;
+
+import org.testng.annotations.Test;
+
+public class ExtentManager {
+  @Test
+  public void f() {
+  }
+}

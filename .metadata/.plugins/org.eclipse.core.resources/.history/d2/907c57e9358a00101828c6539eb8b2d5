@@ -1,0 +1,9 @@
+package com.TelecomProject_POJO;
+
+import org.testng.annotations.Test;
+
+public class ContactResponse {
+  @Test
+  public void f() {
+  }
+}

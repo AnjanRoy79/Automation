@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name = "LensKart">
+	<test name = "RunTest">
+		<classes>
+			<class name = "com.TestNGDemo.D05LenskartTest"> </class>
+		</classes>
+		<groups>
+			<run>
+				<include name = "group1"> </include>
+			</run>
+		</groups>
+	</test>
+</suite>

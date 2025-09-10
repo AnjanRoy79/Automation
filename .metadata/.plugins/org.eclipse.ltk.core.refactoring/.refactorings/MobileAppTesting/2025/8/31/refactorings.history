@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;com.MobileTest.Capabilities.MobileScenarios.NewTest1.java&apos; to &apos;DragAndDrop.java&apos;&#x0D;&#x0A;- Original project: &apos;MobileAppTesting&apos;&#x0D;&#x0A;- Original element: &apos;com.MobileTest.Capabilities.MobileScenarios.NewTest1.java&apos;&#x0D;&#x0A;- Renamed element: &apos;com.MobileTest.Capabilities.MobileScenarios.DragAndDrop.java&apos;" description="Rename compilation unit &apos;NewTest1.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src\/test\/java=/optional=/true=/=/maven.pomderived=/true=/=/test=/true=/&lt;com.MobileTest.Capabilities.MobileScenarios{NewTest1.java" name="DragAndDrop.java" references="false" stamp="1754160780318" version="1.0"/>
+</session>

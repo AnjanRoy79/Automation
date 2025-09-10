@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;MyMavenProject&apos;&#x0D;&#x0A;- Original project: &apos;MyMavenProject&apos;&#x0D;&#x0A;- Original element: &apos;Assignments_SA2503056.docx&apos;" description="Delete element" element1="src/main/resources/Assignments_SA2503056.docx" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="1" stamp="1751020051114" subPackages="false" version="1.0"/>
+</session>

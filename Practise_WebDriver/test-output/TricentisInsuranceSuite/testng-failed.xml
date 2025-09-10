@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [TricentisInsuranceSuite]">
+  <test thread-count="5" name="SilverInsuranceTest(failed)">
+    <parameter name="dateOfManufacture" value="03/06/2020"/>
+    <parameter name="lastName" value="Roy"/>
+    <parameter name="country" value="India"/>
+    <parameter name="occupation" value="Employee"/>
+    <parameter name="gender" value="Male"/>
+    <parameter name="city" value="Kolkata"/>
+    <parameter name="fuel" value="Petrol"/>
+    <parameter name="expClaimDis" value="No"/>
+    <parameter name="damageInsurance" value="Full Coverage"/>
+    <parameter name="enginePerformance" value="1000"/>
+    <parameter name="expPrice" value="244.00"/>
+    <parameter name="password" value="Zxcv@786b"/>
+    <parameter name="licensePlate" value="wb-02-1979"/>
+    <parameter name="street" value="188/ Picnic Garden Road"/>
+    <parameter name="courtesyCar" value="Yes"/>
+    <parameter name="expClaim" value="No"/>
+    <parameter name="make" value="BMW"/>
+    <parameter name="email" value="anjanroy@gmail.com"/>
+    <parameter name="expCover" value="No"/>
+    <parameter name="zip" value="700039"/>
+    <parameter name="picturePath" value="C:\\Users\\anjan.ray\\Desktop\\shiva\\sample.jpg"/>
+    <parameter name="annualMileage" value="5000"/>
+    <parameter name="website" value="https://sampleapp.tricentis.com/101/app.php"/>
+    <parameter name="comments" value="Test Comment"/>
+    <parameter name="birthDate" value="05/16/1979"/>
+    <parameter name="insuranceSum" value="5.000.000,00"/>
+    <parameter name="firstName" value="Anjan"/>
+    <parameter name="numberOfSeats" value="4"/>
+    <parameter name="phone" value="9830721932"/>
+    <parameter name="optionalProduct" value="Euro Protection"/>
+    <parameter name="listPrice" value="1000"/>
+    <parameter name="startDate" value="08/03/2025"/>
+    <parameter name="meritRating" value="Bonus 5"/>
+    <parameter name="username" value="AnjanR"/>
+    <classes>
+      <class name="com.TestNGDemo.TricenticsSilverParameter">
+        <methods>
+          <include name="close"/>
+          <include name="AutomobileInsurance" invocation-numbers="0"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.TestNGDemo.TricenticsSilverParameter -->
+    </classes>
+  </test> <!-- SilverInsuranceTest(failed) -->
+</suite> <!-- Failed suite [TricentisInsuranceSuite] -->

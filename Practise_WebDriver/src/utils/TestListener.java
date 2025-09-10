@@ -1,0 +1,58 @@
+package utils;
+
+import com.aventstack.extentreports.Status;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+
+public class TestListener implements ITestListener {
+
+    @Override
+    public void onTestStart(ITestResult result) {
+        //  Create test entry in Extent Report
+        BaseTest.setTest(BaseTest.extent.createTest(result.getMethod().getMethodName()));
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult result) {
+        String screenshotPath = ScreenshotUtils.captureScreenshot(BaseTest.driver, result.getMethod().getMethodName());
+        if (screenshotPath != null) {
+            BaseTest.getTest().log(Status.PASS, "Test Passed")
+                    .addScreenCaptureFromPath(screenshotPath);
+        } else {
+            BaseTest.getTest().log(Status.PASS, "Test Passed (No screenshot captured)");
+        }
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+        String screenshotPath = ScreenshotUtils.captureScreenshot(BaseTest.driver, result.getMethod().getMethodName());
+        if (screenshotPath != null) {
+            BaseTest.getTest().log(Status.FAIL, "❌ Test Failed: " + result.getThrowable())
+                    .addScreenCaptureFromPath(screenshotPath);
+        } else {
+            BaseTest.getTest().log(Status.FAIL, "❌ Test Failed: " + result.getThrowable());
+        }
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+        String screenshotPath = ScreenshotUtils.captureScreenshot(BaseTest.driver, result.getMethod().getMethodName());
+        if (screenshotPath != null) {
+            BaseTest.getTest().log(Status.SKIP, " Test Skipped: " + result.getThrowable())
+                    .addScreenCaptureFromPath(screenshotPath);
+        } else {
+            BaseTest.getTest().log(Status.SKIP, " Test Skipped: " + result.getThrowable());
+        }
+    }
+
+    @Override
+    public void onStart(ITestContext context) {
+        System.out.println(" Test Suite Started: " + context.getName());
+    }
+
+    @Override
+    public void onFinish(ITestContext context) {
+        System.out.println(" Test Suite Finished: " + context.getName());
+    }
+}

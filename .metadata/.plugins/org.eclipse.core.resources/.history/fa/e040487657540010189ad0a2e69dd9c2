@@ -1,0 +1,86 @@
+package com.OrangeHRM;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+
+public class OrangeHRMPage {
+    WebDriver driver;
+    WebDriverWait wait;
+
+    // Login using data from excel and click submit
+    
+    @FindBy(name = "username") WebElement usernameField;
+    @FindBy(name = "password") WebElement passwordField;
+    @FindBy(xpath = "//button[@type='submit']") WebElement loginButton;
+    
+      
+    // Successful login and then clicking on links as required in SRC and logout.
+    
+    @FindBy(xpath = "/html/body/div/div[1]/div[1]/aside/nav/div[2]/ul/li[1]/a") WebElement adminMenu;
+    @FindBy(xpath = "//span[text()='User Management']/ancestor::li") WebElement userManagement;
+    @FindBy(xpath = "//a[contains(@href,'viewSystemUsers')]")WebElement usersLink;
+    @FindBy(xpath = "//span[@class='oxd-userdropdown-tab']")WebElement profileDropdown;
+    @FindBy(xpath = "//a[text()='Logout']")WebElement logoutButton;
+ 
+
+    public OrangeHRMPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    public void login(String uname, String pwd) throws InterruptedException {
+        
+        usernameField.sendKeys(uname);
+        passwordField.sendKeys(pwd);
+        loginButton.click();
+        Thread.sleep(1000);
+    }
+
+    private void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public void goToUsers() throws InterruptedException{
+        // Wait for the Dashboard header to ensure login is complete
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h6[text()='Dashboard']")));
+
+        // Scroll and click Admin menu (parent <a> tag)
+        wait.until(ExpectedConditions.elementToBeClickable(adminMenu));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", adminMenu);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", adminMenu);
+
+        sleep(1000); // Give time for submenu to render
+
+        // Click on User Management (click the parent <li> or <a> of the span)
+        wait.until(ExpectedConditions.elementToBeClickable(userManagement));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", userManagement);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", userManagement);
+
+        sleep(1000);
+
+        // Click on Users
+        wait.until(ExpectedConditions.elementToBeClickable(usersLink));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", usersLink);
+    }
+
+
+
+    public void logout() {
+        profileDropdown.click();
+        logoutButton.click();
+    }
+}

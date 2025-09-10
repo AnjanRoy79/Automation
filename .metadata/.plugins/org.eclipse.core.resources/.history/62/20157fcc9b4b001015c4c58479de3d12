@@ -1,0 +1,10 @@
+package com.Mytests;
+
+public class LaunchingSelenium {
+
+	public static void main(String[] args) {
+		WebDriver driver = new ChromeDriver();
+
+	}
+
+}

@@ -1,0 +1,86 @@
+package com.OrangeHRM;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+
+public class OrangeHRMPage {
+    WebDriver driver;
+    WebDriverWait wait;
+
+    // Login using data from excel and click submit
+    
+    @FindBy(name = "username") WebElement usernameField;
+    @FindBy(name = "password") WebElement passwordField;
+    @FindBy(xpath = "//button[@type='submit']") WebElement loginButton;
+    
+      
+    // Successful login and then clicking on links as required in SRC and logout.
+    
+     @FindBy(xpath = "//a[@href='/web/index.php/admin/viewAdminModule']") WebElement adminMenu;
+     @FindBy(xpath = "//span[text()='User Management']/ancestor::li") WebElement userManagement;
+     @FindBy(xpath = "//a[contains(@href,'viewSystemUsers')]")WebElement usersLink;
+     @FindBy(xpath = "//span[@class='oxd-userdropdown-tab']")WebElement profileDropdown;
+     @FindBy(xpath = "//a[text()='Logout']")WebElement logoutButton;
+ 
+
+    public OrangeHRMPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    public void login(String uname, String pwd) throws InterruptedException {
+        
+        usernameField.sendKeys(uname);
+        passwordField.sendKeys(pwd);
+        loginButton.click();
+        Thread.sleep(1000);
+    }
+ 
+    public void goToUsers(){
+        // Wait for Dashboard after login
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h6[text()='Dashboard']")));
+
+        // Relocate Admin menu dynamically (not using @FindBy)
+        WebElement adminMenuLive = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//a[@href='/web/index.php/admin/viewAdminModule']")
+        ));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", adminMenuLive);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", adminMenuLive);
+
+        // Wait and click User Management (also dynamically)
+        WebElement userManagementLive = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//span[text()='User Management']/ancestor::li")
+        ));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(userManagementLive).pause(500).click().perform();
+        System.out.println("✅ Clicked User Management");
+
+        // Wait and click Users
+        WebElement usersLinkLive = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//a[contains(@href,'viewSystemUsers')]")
+        ));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", usersLinkLive);
+
+        // Validate System Users header
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h5[text()='System Users']")));
+        System.out.println("✅ Admin > Users page loaded.");
+    }
+
+ 
+    public void logout() {
+        profileDropdown.click();
+        logoutButton.click();
+    }
+}

@@ -1,0 +1,9 @@
+package com.Capstone.OHRM;
+
+import org.testng.annotations.Test;
+
+public class UserManagementPage {
+  @Test
+  public void f() {
+  }
+}

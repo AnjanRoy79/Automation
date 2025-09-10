@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [VehicleQuoteSuite]">
+  <test thread-count="5" name="VehicleQuoteTest(failed)">
+    <classes>
+      <class name="com.POMTricentis.tests.Tc01_VehicleTest">
+        <methods>
+          <include name="Vehicle" invocation-numbers="0"/>
+          <include name="setUp"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- com.POMTricentis.tests.Tc01_VehicleTest -->
+    </classes>
+  </test> <!-- VehicleQuoteTest(failed) -->
+</suite> <!-- Failed suite [VehicleQuoteSuite] -->

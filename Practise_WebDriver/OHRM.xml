@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="CapstoneProject">
+
+  <listeners>
+    <listener class-name="utils1.ExtentITestNGListeners"/>
+  </listeners>
+
+  <test thread-count="5" name="OHRM">
+    <classes>
+      <class name="com.Capstone.OHRM.OrangeHRMTest"/>
+    </classes>
+  </test>
+
+</suite>
+

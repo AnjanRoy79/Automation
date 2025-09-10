@@ -1,0 +1,39 @@
+package utils;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+public class BaseTest {
+
+    protected static ExtentReports extent;
+
+    @BeforeSuite
+    public void setupReport() {
+        // ✅ Create timestamped report path inside test-output/ExtentReport
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String reportPath = System.getProperty("user.dir") + "/test-output/ExtentReport/ExtentReport_" + timestamp + ".html";
+
+        ExtentSparkReporter reporter = new ExtentSparkReporter(reportPath);
+        reporter.config().setDocumentTitle("Automation Report");
+        reporter.config().setReportName("OrangeHRM Test Results");
+
+        extent = new ExtentReports();
+        extent.attachReporter(reporter);
+        extent.setSystemInfo("Project", "OrangeHRM Automation");
+        extent.setSystemInfo("Tester", "Anjan Roy");
+        extent.setSystemInfo("Environment", "QA");
+    }
+
+    @AfterSuite
+    public void tearDownReport() {
+        if (extent != null) {
+            extent.flush(); // ✅ Write report to file
+        }
+    }
+}

@@ -1,0 +1,84 @@
+package com.OrangeHRM;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+
+public class OrangeHRMPage {
+    WebDriver driver;
+    WebDriverWait wait;
+
+    // Login using data from excel and click submit
+    
+    @FindBy(name = "username") WebElement usernameField;
+    @FindBy(name = "password") WebElement passwordField;
+    @FindBy(xpath = "//button[@type='submit']") WebElement loginButton;
+    
+      
+    // Successful login and then clicking on links as required in SRC and logout.
+    
+     @FindBy(xpath = "//a[@href='/web/index.php/admin/viewAdminModule']") WebElement adminMenu;
+     @FindBy(xpath = "//nav[@aria-label='Topbar Menu']//span[text()='User Management']") WebElement userManagement;
+     @FindBy(xpath = "//a[text()='Users']")WebElement usersLink;
+     @FindBy(xpath = "//span[@class='oxd-userdropdown-tab']")WebElement profileDropdown;
+     @FindBy(xpath = "//a[text()='Logout']")WebElement logoutButton;
+ 
+
+    public OrangeHRMPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    public void login(String uname, String pwd) throws InterruptedException {
+        
+        usernameField.sendKeys(uname);
+        passwordField.sendKeys(pwd);
+        loginButton.click();
+        Thread.sleep(1000);
+    }
+ 
+    public void goToUsers(){
+        // Step 1: Ensure Dashboard is loaded
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h6[text()='Dashboard']")));
+
+        // Step 2: Click "Admin" from sidebar
+        WebElement adminMenuLive = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//a[@href='/web/index.php/admin/viewAdminModule']")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", adminMenuLive);
+        Thread.sleep(1000);
+
+        // Step 3: Wait for the 'User Management' span element in top bar
+        WebElement userManagementSpan = wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("//span[text()='User Management' and contains(@class,'oxd-topbar-body-nav-tab')]")));
+
+        // Step 4: Force JS click
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", userManagementSpan);
+        Thread.sleep(500);
+
+        // Step 5: Click on 'Users' link in dropdown
+        WebElement usersLinkLive = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//a[text()='Users']")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", usersLinkLive);
+
+        // Step 6: Confirm navigation
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h5[text()='System Users']")));
+        System.out.println("✅ Successfully navigated to Admin > User Management > Users.");
+    }
+
+ 
+    public void logout() {
+        profileDropdown.click();
+        logoutButton.click();
+    }
+}

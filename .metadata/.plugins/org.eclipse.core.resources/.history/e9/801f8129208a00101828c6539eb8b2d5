@@ -1,0 +1,9 @@
+package com.TelecomProject_POJO;
+
+import org.testng.annotations.Test;
+
+public class UserRequest {
+  @Test
+  public void f() {
+  }
+}

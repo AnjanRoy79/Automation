@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="TricentisInsuranceSuite">
+  <test name="SilverInsuranceTest">
+  
+    <parameter name="make" value="BMW" />
+    <parameter name="enginePerformance" value="1000" />
+    <parameter name="dateOfManufacture" value="03/06/2020" />
+    <parameter name="numberOfSeats" value="4" />
+    <parameter name="fuel" value="Petrol" />
+    <parameter name="listPrice" value="1000" />
+    <parameter name="licensePlate" value="wb-02-1979" />
+    <parameter name="annualMileage" value="5000" />
+
+    <parameter name="firstName" value="Anjan" />
+    <parameter name="lastName" value="Roy" />
+    <parameter name="birthDate" value="05/16/1979" />
+    <parameter name="gender" value="Male" />
+    <parameter name="street" value="188/ Picnic Garden Road" />
+    <parameter name="country" value="India" />
+    <parameter name="zip" value="700039" />
+    <parameter name="city" value="Kolkata" />
+    <parameter name="occupation" value="Employee" />
+    <parameter name="website" value="https://sampleapp.tricentis.com/101/app.php" />
+    <parameter name="picturePath" value="C:\\Users\\anjan.ray\\Desktop\\shiva\\sample.jpg" />
+
+    <parameter name="startDate" value="08/03/2025" />
+    <parameter name="insuranceSum" value="5.000.000,00" />
+    <parameter name="meritRating" value="Bonus 5" />
+    <parameter name="damageInsurance" value="Full Coverage" />
+    <parameter name="optionalProduct" value="Euro Protection" />
+    <parameter name="courtesyCar" value="Yes" />
+
+    <parameter name="expPrice" value="244.00" />
+    <parameter name="expClaim" value="No" />
+    <parameter name="expClaimDis" value="No" />
+    <parameter name="expCover" value="No" />
+
+    <parameter name="email" value="anjanroy@gmail.com" />
+    <parameter name="phone" value="9830721932" />
+    <parameter name="username" value="AnjanR" />
+    <parameter name="password" value="Zxcv@786b" />
+    <parameter name="comments" value="Test Comment" />
+
+    <classes>
+      <class name="com.TestNGDemo.TricenticsSilverParameter" />
+    </classes>
+  </test>
+</suite>

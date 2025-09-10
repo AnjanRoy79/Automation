@@ -1,0 +1,91 @@
+package com.TelecomProject;
+
+
+
+import com.TelecomProject_POJO.UserRequest;
+import com.TelecomProject_POJO.UserResponse;
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+public class UserApiTest {
+
+    String baseURI = "https://thinking-tester-contact-list.herokuapp.com";
+    String token;
+    String emailId;
+
+    @BeforeClass
+    public void setup() {
+        RestAssured.baseURI = baseURI;
+    }
+
+    // Test Case 1: Add New User
+    @Test(priority = 1)
+    public void testAddNewUser() {
+        emailId = "anjan" + System.currentTimeMillis() + "@gmail.com";
+        UserRequest user = new UserRequest("Anjan", "Roy", emailId, "test@123");
+
+        UserResponse response = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(user)
+                .when()
+                .post("/users")
+                .then()
+                .statusCode(201)
+                .extract().as(UserResponse.class);
+
+        Assert.assertNotNull(response.getToken(), "Token should not be null");
+        Assert.assertEquals(response.getUser().getEmail(), emailId);
+
+        token = response.getToken();
+        System.out.println("Generated Token: " + token);
+    }
+
+
+    // Test Case 2: Get User Profile
+    @Test(priority = 2, dependsOnMethods = "testAddNewUser")
+    public void testGetUserProfile() {
+        UserResponse response = RestAssured
+                .given()
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get("/users/me")
+                .then()
+                .statusCode(200)
+                .extract().as(UserResponse.class);
+
+        Assert.assertEquals(response.getEmail(), emailId);
+        System.out.println("User Profile: " + response.getFirstName() + " " + response.getLastName());
+    }
+
+    // Test Case 3: Update User
+    @Test(priority = 3, dependsOnMethods = "testAddNewUser")
+    public void testUpdateUser() {
+        String updatedEmail = "anjanr" + System.currentTimeMillis() + "@gmail.com";
+        UserRequest updatedUser = new UserRequest("AnjanR", "RoyDa", updatedEmail, "test1234");
+
+        UserResponse response = RestAssured
+                .given()
+                .header("Authorization", "Bearer " + token)
+                .contentType(ContentType.JSON)
+                .body(updatedUser)
+                .when()
+                .patch("/users/me")
+                .then()
+                .statusCode(200)
+                .extract().as(UserResponse.class);
+
+        Assert.assertEquals(response.getFirstName(), "AnjanR");
+        Assert.assertEquals(response.getLastName(), "RoyDa");
+        Assert.assertEquals(response.getEmail(), updatedEmail);
+
+        System.out.println("Updated Profile: " + response.getFirstName() + " " + response.getLastName());
+    }
+}
+
