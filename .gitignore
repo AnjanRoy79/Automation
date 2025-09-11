@@ -1,48 +1,29 @@
-# ==========================
-# Eclipse & IntelliJ files
-# ==========================
+# Eclipse & IntelliJ
 .classpath
 .project
 .settings/
 .idea/
 *.iml
 
-# ==========================
-# Build directories
-# ==========================
+# Build dirs
 bin/
 out/
 target/
 
-# ==========================
-# Reports & Logs
-# ==========================
+# Selenium reports
 test-output/
 reports/
 extent-reports/
 logs/
 *.log
 
-# ==========================
-# OS-specific files
-# ==========================
+# Cypress stuff
+node_modules/
+cypress/screenshots/
+cypress/videos/
+package-lock.json
+downloads/
+
+# OS junk
 .DS_Store
 Thumbs.db
-
-# ==========================
-# Temporary files
-# ==========================
-*.tmp
-*.swp
-*.bak
-
-# ==========================
-# Libraries (keep Maven/Gradle clean)
-# ==========================
-/Lib/
-
-# ==========================
-# Excel Test Data
-# ==========================
-# ❌ Do NOT ignore ExcelFiles/ (keep in repo)
-# so your framework has test data
