@@ -1,8 +1,67 @@
-# Cypress stuff
+# ========================
+# OS / IDE files
+# ========================
+.DS_Store
+Thumbs.db
+*.log
+
+# Eclipse / IntelliJ / VSCode
+.classpath
+.project
+.settings/
+.idea/
+.vscode/
+*.iml
+
+# ========================
+# Java / Maven
+# ========================
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Keep Maven POM always
+!pom.xml
+
+# ========================
+# Node / Cypress
+# ========================
 node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Cypress outputs
 cypress/screenshots/
 cypress/videos/
-package-lock.json
+cypress/downloads/
 
-# Logs
-*.log
+# Keep Cypress config files
+!cypress.config.js
+!cypress.json
+
+# ========================
+# Reports / Coverage
+# ========================
+reports/
+screenshots/
+videos/
+test-output/
+allure-results/
+allure-report/
+coverage/
+*.tmp
+*.bak
+*.swp
+*.swo
+*.out
+*.coverage
+
+# ========================
+# OS Generated Files
+# ========================
+ehthumbs.db
+Desktop.ini
